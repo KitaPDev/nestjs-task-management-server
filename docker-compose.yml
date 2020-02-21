@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+    backend:
+        image: node
+        volumes:
+            - .:/server
+        command: sh -c 'cd /server && yarn && yarn start:dev'
+        environment:
+            DB_HOST: postgresql
+            DB_USERNAME: postgres
+            DB_PASSWORD: postgres
+            DB_DATABASE: postgres
+        ports:
+            - 3000:3000
+
+    postgresql:
+        image: postgres:11.5
+        volumes:
+            - ./data/postgres:/var/lib/postgresql
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - 5432:5432
